@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.ppedrosa.android.experimentos.ui.CategoryView
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         startButton =findViewById(R.id.start_button)
 
         startButton.setOnClickListener {
-            val intent = Intent(this@MainActivity, PrincipalView::class.java)
+            val intent = Intent(this@MainActivity, CategoryView::class.java)
             startActivity(intent)
         }
 

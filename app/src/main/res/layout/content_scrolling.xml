@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.ScrollingActivity"
+    tools:showIn="@layout/activity_scrolling">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/titleTVExp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:text="Title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <!-- inicio chips -->
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            >
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- fin chips -->
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/warningTVExperiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:justificationMode="inter_word"
+            tools:targetApi="o" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/instructionTVExperiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@id/warningTVExperiment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:singleLine="false"
+            android:inputType="textMultiLine"
+            android:justificationMode="inter_word"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/explanationTVExperiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@id/instructionTVExperiment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:justificationMode="inter_word"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/observationTVExperiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@id/explanationTVExperiment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:justificationMode="inter_word"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/adviceTVExperiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@id/observationTVExperiment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:justificationMode="inter_word"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/techniqueTVExperiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@id/adviceTVExperiment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:justificationMode="inter_word"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/challengeTVExperiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            app:layout_constraintTop_toBottomOf="@id/techniqueTVExperiment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:justificationMode="inter_word"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.core.widget.NestedScrollView>
