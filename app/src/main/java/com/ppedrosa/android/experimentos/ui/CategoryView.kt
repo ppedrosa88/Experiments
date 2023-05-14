@@ -1,15 +1,17 @@
 package com.ppedrosa.android.experimentos.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ppedrosa.android.experimentos.R
-import com.ppedrosa.android.experimentos.ui.ExperimentView.Companion.EXTRA_CATEGORY_ID
 import com.ppedrosa.android.experimentos.data.CategoryAdapter
 import com.ppedrosa.android.experimentos.data.ExperimentAdapter
 import com.ppedrosa.android.experimentos.database.SQLiteHelper
+import com.ppedrosa.android.experimentos.ui.ExperimentView.Companion.EXTRA_CATEGORY_ID
+
 
 class CategoryView : AppCompatActivity(), CategoryAdapter.onItemClickListener,
     ExperimentAdapter.onItemClickListener {
@@ -17,19 +19,28 @@ class CategoryView : AppCompatActivity(), CategoryAdapter.onItemClickListener,
     private lateinit var recyclerView: RecyclerView
     private lateinit var sqliteHelper: SQLiteHelper
     private var adapter: CategoryAdapter? = null
+    private lateinit var fabSearch: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_principal_view)
+        setContentView(R.layout.activity_category_view)
+
 
         initView()
         initRecyclerView()
+
+        fabSearch.setOnClickListener {
+            val intent = Intent(this, SearchView::class.java)
+            startActivity(intent)
+        }
+
         sqliteHelper = SQLiteHelper(this)
         adapter?.setOnItemClickListener(this)
     }
 
     private fun initView() {
         recyclerView = findViewById(R.id.recyclerView)
+        fabSearch = findViewById(R.id.fab_search)
     }
 
     override fun onItemClick(id: Int) {

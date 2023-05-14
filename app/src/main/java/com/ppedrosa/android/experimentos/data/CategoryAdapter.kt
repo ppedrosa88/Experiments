@@ -1,6 +1,5 @@
 package com.ppedrosa.android.experimentos.data
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.ppedrosa.android.experimentos.database.Category
 import com.ppedrosa.android.experimentos.ui.CategoryView
 import com.ppedrosa.android.experimentos.R
-
 
 class CategoryAdapter(var categoryList: ArrayList<Category> = ArrayList())
     : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
@@ -49,12 +47,10 @@ class CategoryAdapter(var categoryList: ArrayList<Category> = ArrayList())
                     .load(category.photo)
                     .into(image)
             }
-
         }
         init {
             itemView.setOnClickListener {
                 listener.onItemClick(absoluteAdapterPosition)
-
             }
         }
     }
@@ -81,5 +77,4 @@ class CategoryAdapter(var categoryList: ArrayList<Category> = ArrayList())
     override fun getItemCount(): Int {
         return categoryList.size
     }
-
 }

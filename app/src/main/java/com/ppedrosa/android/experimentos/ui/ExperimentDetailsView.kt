@@ -18,10 +18,10 @@ import com.google.android.material.chip.ChipGroup
 import com.ppedrosa.android.experimentos.R
 import com.ppedrosa.android.experimentos.database.Experiment
 import com.ppedrosa.android.experimentos.database.SQLiteHelper
-import com.ppedrosa.android.experimentos.databinding.ActivityScrollingBinding
+import com.ppedrosa.android.experimentos.databinding.ActivityExperimentDetailBinding
 
 
-class ScrollingActivity : AppCompatActivity() {
+class ExperimentDetailsView : AppCompatActivity() {
 
     private lateinit var titleTV: TextView
     private lateinit var warningTV: TextView
@@ -33,15 +33,15 @@ class ScrollingActivity : AppCompatActivity() {
     private lateinit var challengeTV: TextView
     private lateinit var sqliteHelper: SQLiteHelper
     private var experimentId: Int = -1
-    private lateinit var binding: ActivityScrollingBinding
+    private lateinit var binding: ActivityExperimentDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityScrollingBinding.inflate(layoutInflater)
+        binding = ActivityExperimentDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val experimentId = intent.getIntExtra(ScrollingActivity.EXTRA_EXPERIMENT_ID, -1)
+        val experimentId = intent.getIntExtra(EXTRA_EXPERIMENT_ID, -1)
 
         this.experimentId = experimentId
 
@@ -140,7 +140,7 @@ class ScrollingActivity : AppCompatActivity() {
 
         if (words != null) {
             for (i in words.indices) {
-                val word = words?.get(i)
+                val word = words[i]
                 if (i < 2) {
                     finalText.append("<font color='#317f43'>").append("<b>").append(word)
                         .append("</b>").append(" </font>")
@@ -161,9 +161,9 @@ class ScrollingActivity : AppCompatActivity() {
 
         if (words != null) {
             for (i in words.indices) {
-                val word = words?.get(i)
+                val word = words[i]
                 if (i == 0) {
-                    finalText.append("<font color='#317f43'>").append("<b>").append(word)
+                    finalText.append("<font color='#00b8d4'>").append("<b>").append(word)
                         .append("</b>").append(" </font>").append("<br>")
                 } else {
                     finalText.append(word).append(" ")
@@ -232,7 +232,7 @@ class ScrollingActivity : AppCompatActivity() {
                 }
             }
         }
-        if (type == false) {
+        if (!type) {
             explanationTV.text = HtmlCompat.fromHtml(
                 finalText.toString(),
                 HtmlCompat.FROM_HTML_MODE_LEGACY
@@ -249,16 +249,16 @@ class ScrollingActivity : AppCompatActivity() {
 
             for ((key, value) in material) {
                 if (key.first().isUpperCase()) {
-                    materialList.add("$key")
+                    materialList.add(key)
                 } else {
                     materialList.add("$value $key")
                 }
             }
 
-            for (cadena in materialList) {
+            for (mat in materialList) {
                 val chip = Chip(this)
-                chip.text = cadena
-                chip.isClickable = true
+                chip.text = mat
+                chip.isClickable = false
                 chip.isCheckable = false
                 chipGroup.addView(chip)
             }

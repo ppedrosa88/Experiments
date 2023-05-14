@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.ScrollingActivity">
+    tools:context=".ui.ExperimentDetailsView">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:theme="@style/Theme.Experimentos.AppBarOverlay"/>
+        android:theme="@style/Theme.Experimentos.PopupOverlay"/>
 
-    <include layout="@layout/content_scrolling" />
+    <include layout="@layout/content_experiment_detail" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

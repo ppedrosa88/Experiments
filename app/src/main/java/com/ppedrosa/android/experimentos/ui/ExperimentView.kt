@@ -1,16 +1,16 @@
 package com.ppedrosa.android.experimentos.ui
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ppedrosa.android.experimentos.R
 import com.ppedrosa.android.experimentos.database.SQLiteHelper
 import com.ppedrosa.android.experimentos.data.ExperimentAdapter
-import com.ppedrosa.android.experimentos.ui.ScrollingActivity.Companion.EXTRA_EXPERIMENT_ID
+import com.ppedrosa.android.experimentos.ui.ExperimentDetailsView.Companion.EXTRA_EXPERIMENT_ID
 
 class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListener {
 
@@ -18,6 +18,7 @@ class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListene
     private lateinit var sqliteHelper: SQLiteHelper
     private var adapter: ExperimentAdapter? = null
     private var categoryId: Int = -1
+    private lateinit var fabSearch: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,10 @@ class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListene
         } else {
             initView()
             initRecyclerView()
+            fabSearch.setOnClickListener {
+                val intent = Intent(this, SearchView::class.java)
+                startActivity(intent)
+            }
             sqliteHelper = SQLiteHelper(this)
             adapter?.setOnItemClickListener(this)
         }
@@ -42,6 +47,7 @@ class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListene
 
     private fun initView() {
         recyclerView = findViewById(R.id.ExperimentRecycler)
+        fabSearch = findViewById(R.id.fab_search)
     }
 
     private fun getExperiments(id: Int) {
@@ -57,16 +63,14 @@ class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListene
 
     override fun onResume() {
         super.onResume()
-        Log.e(null,categoryId.toString())
         getExperiments(categoryId)
     }
 
     override fun onItemClick(id: Int) {
-        val intent = Intent(this, ScrollingActivity::class.java).apply {
+        val intent = Intent(this, ExperimentDetailsView::class.java).apply {
             putExtra(EXTRA_EXPERIMENT_ID, id)
         }
         startActivity(intent)    }
-
 }
 
 

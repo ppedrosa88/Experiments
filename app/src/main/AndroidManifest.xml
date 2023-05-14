@@ -16,18 +16,18 @@
         android:theme="@style/Theme.Experimentos"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ScrollingActivity"
-            android:exported="false"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/Theme.Experimentos.NoActionBar" />
-        <activity
-            android:name=".ui.ExperimentExplanationView"
+            android:name=".ui.SearchView"
             android:exported="false" />
+        <activity
+            android:name=".ui.ExperimentDetailsView"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Experimentos.NoActionBar" />
         <activity
             android:name=".ui.ExperimentView"
             android:exported="false"
-            android:label="@string/title_activity_experiment"
-            android:theme="@style/Theme.Experimentos.NoActionBar" />
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Experimentos" />
         <activity
             android:name=".ui.CategoryView"
             android:exported="false">

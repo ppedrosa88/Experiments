@@ -9,7 +9,8 @@ import android.util.Log
 import java.io.FileOutputStream
 
 
-class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
+class SQLiteHelper(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
@@ -69,7 +70,7 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
     @SuppressLint("Range")
-    fun getAllCategories(): ArrayList<Category>{
+    fun getAllCategories(): ArrayList<Category> {
         val catList: ArrayList<Category> = ArrayList()
         val selectQuery = "SELECT * FROM $CATEGORY"
         val db = this.readableDatabase
@@ -89,7 +90,7 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
         var photo: String?
 
         if (cursor.moveToFirst()) {
-            do{
+            do {
                 id = cursor.getInt(cursor.getColumnIndex("id"))
                 name = cursor.getString(cursor.getColumnIndex("name"))
                 photo = cursor.getString(cursor.getColumnIndex("photo_url"))
@@ -106,7 +107,7 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
     @SuppressLint("Range")
-    fun getExperimentById(exp_id:Int): Experiment? {
+    fun getExperimentById(exp_id: Int): Experiment? {
         var experiment: Experiment? = null
         val selectQuery = "SELECT * FROM $EXPERIMENT WHERE id= $exp_id "
         val db = this.readableDatabase
@@ -121,10 +122,9 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
             return null
         }
 
-
         var id: Int
         var name: String
-        var category_id : Int?
+        var category_id: Int?
         var instruction: String?
         var explanation: String?
         var observation: String?
@@ -135,7 +135,7 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
         var photo_url: String?
 
         if (cursor.moveToFirst()) {
-            do{
+            do {
                 id = cursor.getInt(cursor.getColumnIndex("id"))
                 name = cursor.getString(cursor.getColumnIndex("name"))
                 category_id = cursor.getInt(cursor.getColumnIndex("category_id"))
@@ -163,16 +163,16 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
                 )
             } while (cursor.moveToNext())
         }
-
         cursor.close()
         return experiment
     }
 
 
     @SuppressLint("Range")
-    fun getExperimentsByCategoryId(cat_id:Int): ArrayList<Experiment> {
+    fun getExperimentsByCategoryId(cat_id: Int): ArrayList<Experiment> {
         val experimentList: ArrayList<Experiment> = ArrayList()
-        val selectQuery = "SELECT experiment.id, experiment.name FROM $EXPERIMENT WHERE category_id= $cat_id "
+        val selectQuery =
+            "SELECT experiment.id, experiment.name FROM $EXPERIMENT WHERE category_id= $cat_id "
         val db = this.readableDatabase
 
         val cursor: Cursor?
@@ -185,13 +185,11 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
             return ArrayList()
         }
 
-
         var id: Int
         var name: String
 
-
         if (cursor.moveToFirst()) {
-            do{
+            do {
                 id = cursor.getInt(cursor.getColumnIndex("id"))
                 name = cursor.getString(cursor.getColumnIndex("name"))
 
@@ -217,12 +215,12 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
     @SuppressLint("Range")
-    fun getMaterialsByExperimentsId(expId:Int): Map<String, String>? {
+    fun getMaterialsByExperimentsId(expId: Int): Map<String, String>? {
         val materialMap = mutableMapOf<String, String>()
         val selectQuery = "SELECT material.material, experiment_material.quantity \n" +
-                            "FROM experiment_material \n" +
-                            "JOIN material ON experiment_material.material_id = material.id \n" +
-                            "WHERE experiment_material.experiment_id = $expId;"
+                "FROM experiment_material \n" +
+                "JOIN material ON experiment_material.material_id = material.id \n" +
+                "WHERE experiment_material.experiment_id = $expId;"
 
         val db = this.readableDatabase
         val cursor: Cursor?
@@ -239,11 +237,11 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
         var quantity: String
 
         if (cursor.moveToFirst()) {
-            do{
+            do {
                 name = cursor.getString(cursor.getColumnIndex("material"))
                 quantity = cursor.getString(cursor.getColumnIndex("quantity"))
 
-                materialMap.put(name,quantity)
+                materialMap.put(name, quantity)
             } while (cursor.moveToNext())
         }
 
@@ -252,5 +250,44 @@ class SQLiteHelper(context: Context)  : SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
 
+    @SuppressLint("Range")
+    fun searchExperimentsByMaterials(materials: List<String>): List<Experiment> {
+        val db = this.readableDatabase
+        val selectQuery =
+            "SELECT * FROM experiment WHERE id IN (" +
+                    "SELECT experiment_id FROM experiment_material WHERE material_id IN (" +
+                    "SELECT id FROM material WHERE material IN (${materials.joinToString { "'$it'" }})"
+        val experiments = mutableListOf<Experiment>()
+        val cursor: Cursor?
+
+        try {
+            cursor = db.rawQuery(selectQuery, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(selectQuery)
+            return ArrayList()
+        }
+
+        if (cursor.moveToFirst()) {
+            do {
+                val experiment = Experiment(
+                cursor.getInt(cursor.getColumnIndex("id")),
+                cursor.getString(cursor.getColumnIndex("name")),
+                cursor.getInt(cursor.getColumnIndex("category_id")),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,null,
+                    null,
+                    null
+                )
+                experiments.add(experiment)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return experiments
+    }
 
 }

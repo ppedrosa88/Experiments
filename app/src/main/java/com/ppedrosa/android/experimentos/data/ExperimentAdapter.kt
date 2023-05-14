@@ -22,7 +22,6 @@ class ExperimentAdapter(private var experimentList: ArrayList<Experiment> = Arra
         this.listener = listener
     }
 
-
     class ExperimentViewHolder(itemView: View, listener: onItemClickListener): RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.titleTV)
 
@@ -33,7 +32,6 @@ class ExperimentAdapter(private var experimentList: ArrayList<Experiment> = Arra
         init {
             itemView.setOnClickListener {
                 listener.onItemClick(absoluteAdapterPosition)
-
             }
         }
     }
@@ -62,5 +60,4 @@ class ExperimentAdapter(private var experimentList: ArrayList<Experiment> = Arra
     override fun getItemCount(): Int {
         return experimentList.size
     }
-
 }
