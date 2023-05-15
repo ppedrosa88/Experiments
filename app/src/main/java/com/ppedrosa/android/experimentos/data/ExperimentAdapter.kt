@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ppedrosa.android.experimentos.database.Experiment
-import com.ppedrosa.android.experimentos.ui.ExperimentView
 import com.ppedrosa.android.experimentos.R
+import com.ppedrosa.android.experimentos.ui.ExperimentView
 
 class ExperimentAdapter(private var experimentList: ArrayList<Experiment> = ArrayList())
     : RecyclerView.Adapter<ExperimentAdapter.ExperimentViewHolder>() {

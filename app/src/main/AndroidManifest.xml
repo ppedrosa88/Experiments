@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Experimentos"
         tools:targetApi="31">
         <activity
-            android:name=".ui.SearchView"
+            android:name=".ui.ExperimentSearchView"
             android:exported="false" />
         <activity
             android:name=".ui.ExperimentDetailsView"

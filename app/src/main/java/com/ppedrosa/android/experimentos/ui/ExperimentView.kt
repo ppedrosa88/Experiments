@@ -3,13 +3,13 @@ package com.ppedrosa.android.experimentos.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ppedrosa.android.experimentos.R
 import com.ppedrosa.android.experimentos.database.SQLiteHelper
 import com.ppedrosa.android.experimentos.data.ExperimentAdapter
+
 import com.ppedrosa.android.experimentos.ui.ExperimentDetailsView.Companion.EXTRA_EXPERIMENT_ID
 
 class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListener {
@@ -19,6 +19,7 @@ class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListene
     private var adapter: ExperimentAdapter? = null
     private var categoryId: Int = -1
     private lateinit var fabSearch: FloatingActionButton
+    private var listener: ExperimentAdapter.onItemClickListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListene
             initView()
             initRecyclerView()
             fabSearch.setOnClickListener {
-                val intent = Intent(this, SearchView::class.java)
+                val intent = Intent(this, ExperimentSearchView::class.java)
                 startActivity(intent)
             }
             sqliteHelper = SQLiteHelper(this)
@@ -70,7 +71,10 @@ class ExperimentView : AppCompatActivity(), ExperimentAdapter.onItemClickListene
         val intent = Intent(this, ExperimentDetailsView::class.java).apply {
             putExtra(EXTRA_EXPERIMENT_ID, id)
         }
-        startActivity(intent)    }
+        startActivity(intent)
+    }
+
+
 }
 
 

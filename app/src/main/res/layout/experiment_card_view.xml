@@ -33,7 +33,6 @@
 
             <!-- Title, secondary and supporting text -->
             <TextView
-
                 android:id="@+id/titleTV"
                 android:layout_margin="20dp"
                 android:gravity="center_vertical"

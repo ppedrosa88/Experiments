@@ -253,15 +253,15 @@ class SQLiteHelper(context: Context) :
     @SuppressLint("Range")
     fun searchExperimentsByMaterials(materials: List<String>): List<Experiment> {
         val db = this.readableDatabase
-        val selectQuery =
-            "SELECT * FROM experiment WHERE id IN (" +
-                    "SELECT experiment_id FROM experiment_material WHERE material_id IN (" +
-                    "SELECT id FROM material WHERE material IN (${materials.joinToString { "'$it'" }})"
-        val experiments = mutableListOf<Experiment>()
+        val conditions = materials.joinToString(" OR ") { "material LIKE '%${it}%'" }
+        val selectQuery = "SELECT * FROM experiment WHERE id IN (SELECT experiment_id FROM experiment_material WHERE material_id IN (SELECT id FROM material WHERE $conditions))"
+        val experiments = ArrayList<Experiment>()
         val cursor: Cursor?
 
         try {
-            cursor = db.rawQuery(selectQuery, null)
+
+                cursor = db.rawQuery(selectQuery, null)
+
         } catch (e: Exception) {
             e.printStackTrace()
             db.execSQL(selectQuery)
@@ -285,9 +285,8 @@ class SQLiteHelper(context: Context) :
                 experiments.add(experiment)
             } while (cursor.moveToNext())
         }
-
         cursor.close()
+        Log.e(null,experiments.size.toString())
         return experiments
     }
-
 }

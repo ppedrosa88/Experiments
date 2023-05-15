@@ -30,7 +30,7 @@ class CategoryView : AppCompatActivity(), CategoryAdapter.onItemClickListener,
         initRecyclerView()
 
         fabSearch.setOnClickListener {
-            val intent = Intent(this, SearchView::class.java)
+            val intent = Intent(this, ExperimentSearchView::class.java)
             startActivity(intent)
         }
 
