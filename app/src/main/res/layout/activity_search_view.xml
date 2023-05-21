@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/searh_view_bg"
-        app:layout_constraintEnd_toEndOf="@id/chipMaterialGroup"
+        android:backgroundTint="@color/white"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="¿Qué materiales tienes?"
-        app:iconifiedByDefault="false"
-        android:backgroundTint="@color/white"/>
+        app:queryHint="¿Qué materiales tienes?" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipMaterialGroup"
