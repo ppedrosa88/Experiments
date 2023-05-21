@@ -20,18 +20,6 @@ data class Experiment(
     var technique: String?,
     var challenge: String?,
     var photo_url: String?
-): Serializable {
-    class Experiment constructor()
-}
-
-data class Experiment_Material(
-    var experiment_id:Int?,
-    var material_id:Int?,
-    var quantity:String?
 ): Serializable
 
-data class Material(
-    var id:Int?,
-    var material:String?
-): Serializable
 

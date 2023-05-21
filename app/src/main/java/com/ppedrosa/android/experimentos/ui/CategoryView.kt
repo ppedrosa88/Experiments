@@ -11,7 +11,7 @@ import com.ppedrosa.android.experimentos.data.CategoryAdapter
 import com.ppedrosa.android.experimentos.data.ExperimentAdapter
 import com.ppedrosa.android.experimentos.database.SQLiteHelper
 import com.ppedrosa.android.experimentos.ui.ExperimentView.Companion.EXTRA_CATEGORY_ID
-
+import com.ppedrosa.android.experimentos.ui.ExperimentView.Companion.EXTRA_CATEGORY_NAME
 
 class CategoryView : AppCompatActivity(), CategoryAdapter.onItemClickListener,
     ExperimentAdapter.onItemClickListener {
@@ -43,11 +43,15 @@ class CategoryView : AppCompatActivity(), CategoryAdapter.onItemClickListener,
         fabSearch = findViewById(R.id.fab_search)
     }
 
-    override fun onItemClick(id: Int) {
-        val intent = Intent(this, ExperimentView::class.java).apply {
-            putExtra(EXTRA_CATEGORY_ID, id+1)
+    override fun onItemClick(position: Int) {
+        val categoryName = adapter?.categoryList?.getOrNull(position)?.name
+        categoryName?.let{
+            val intent = Intent(this, ExperimentView::class.java).apply {
+                putExtra(EXTRA_CATEGORY_ID, position+1)
+                putExtra(EXTRA_CATEGORY_NAME, categoryName)
+            }
+            startActivity(intent)
         }
-        startActivity(intent)
     }
 
     private fun getCategories() {

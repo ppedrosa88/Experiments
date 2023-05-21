@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ppedrosa.android.experimentos.R
 import com.ppedrosa.android.experimentos.database.Experiment
 
@@ -20,9 +22,15 @@ class ExperimentSearchAdapter(
 
     class ExperimentSearchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.titleTV)
+        private val photo: ImageView = itemView.findViewById(R.id.ExperimentsIV)
 
         fun bindView(experiment: Experiment) {
             name.text = experiment.name
+            if(experiment.photo_url != null) {
+                Glide.with(itemView.context)
+                    .load(experiment.photo_url)
+                    .into(photo)
+            }
         }
     }
 
@@ -33,10 +41,13 @@ class ExperimentSearchAdapter(
 
     override fun onBindViewHolder(holder: ExperimentSearchViewHolder, position: Int) {
         val experiment = experimentList[position]
+        val index = experimentList[position].id
         holder.bindView(experiment)
         // Set events
         holder.itemView.setOnClickListener {
-            listener.onItemClick(position)
+            if (index != null) {
+                listener.onItemClick(index)
+            }
         }
     }
 

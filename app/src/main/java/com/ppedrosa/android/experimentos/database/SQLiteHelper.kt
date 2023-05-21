@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import java.io.FileOutputStream
 
 
@@ -172,7 +171,7 @@ class SQLiteHelper(context: Context) :
     fun getExperimentsByCategoryId(cat_id: Int): ArrayList<Experiment> {
         val experimentList: ArrayList<Experiment> = ArrayList()
         val selectQuery =
-            "SELECT experiment.id, experiment.name FROM $EXPERIMENT WHERE category_id= $cat_id "
+            "SELECT experiment.id, experiment.name, experiment.photo_url FROM $EXPERIMENT WHERE category_id= $cat_id "
         val db = this.readableDatabase
 
         val cursor: Cursor?
@@ -187,11 +186,17 @@ class SQLiteHelper(context: Context) :
 
         var id: Int
         var name: String
+        var photo_url: String
 
         if (cursor.moveToFirst()) {
             do {
                 id = cursor.getInt(cursor.getColumnIndex("id"))
                 name = cursor.getString(cursor.getColumnIndex("name"))
+                if (!cursor.isNull(cursor.getColumnIndex("Photo_url"))) {
+                    photo_url = cursor.getString(cursor.getColumnIndex("Photo_url"))
+                } else {
+                    photo_url = null.toString()
+                }
 
                 val experiment = Experiment(
                     id,
@@ -204,7 +209,7 @@ class SQLiteHelper(context: Context) :
                     null,
                     null,
                     null,
-                    null,
+                    photo_url,
                 )
                 experimentList.add(experiment)
             } while (cursor.moveToNext())
@@ -254,6 +259,8 @@ class SQLiteHelper(context: Context) :
     fun searchExperimentsByMaterials(materials: List<String>): List<Experiment> {
         val db = this.readableDatabase
         val conditions = materials.joinToString(" OR ") { "material LIKE '%${it}%'" }
+        // val nameConditions = materials.joinToString(" OR ") { "name LIKE '%${it}%'" }
+        // (name LIKE nameConditions
         val selectQuery = "SELECT * FROM experiment WHERE id IN (SELECT experiment_id FROM experiment_material WHERE material_id IN (SELECT id FROM material WHERE $conditions))"
         val experiments = ArrayList<Experiment>()
         val cursor: Cursor?
@@ -280,13 +287,12 @@ class SQLiteHelper(context: Context) :
                     null,
                     null,null,
                     null,
-                    null
+                    cursor.getString(cursor.getColumnIndex("Photo_url"))
                 )
                 experiments.add(experiment)
             } while (cursor.moveToNext())
         }
         cursor.close()
-        Log.e(null,experiments.size.toString())
         return experiments
     }
 }

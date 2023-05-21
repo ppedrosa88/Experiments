@@ -2,9 +2,10 @@ package com.ppedrosa.android.experimentos.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.ppedrosa.android.experimentos.R
 import com.ppedrosa.android.experimentos.data.ExperimentSearchAdapter
 import com.ppedrosa.android.experimentos.database.Experiment
 import com.ppedrosa.android.experimentos.database.SQLiteHelper
-import java.lang.Exception
+
 
 class ExperimentSearchView : AppCompatActivity(), ExperimentSearchAdapter.OnItemClickListener {
     private lateinit var searchView: SearchView
@@ -46,7 +47,9 @@ class ExperimentSearchView : AppCompatActivity(), ExperimentSearchAdapter.OnItem
                     materialList.add(it)
                     val chip = Chip(this@ExperimentSearchView)
                     chip.text = it
+                    chip.setTextColor(Color.WHITE)
                     chip.isCloseIconVisible = true
+                    chip.setChipBackgroundColorResource(R.color.md_light_green_500)
                     try {
                         chipGroup.addView(chip)
                     } catch (e: Exception) {
@@ -56,29 +59,24 @@ class ExperimentSearchView : AppCompatActivity(), ExperimentSearchAdapter.OnItem
                         val materialToRemove = chip.text.toString()
                         materialList.remove(materialToRemove)
                         chipGroup.removeView(chip)
-                        Log.e(null, materialToRemove)
                         if (materialList.isNotEmpty()) {
                             experimentList = sqliteHelper.searchExperimentsByMaterials(materialList) as ArrayList<Experiment>
                             experimentSearchAdapter.addItems(experimentList)
-                            Log.e(null, experimentList.toString())
                         } else {
                             experimentList.clear()
                         }
                         experimentSearchAdapter.notifyDataSetChanged()
                     }
+                    experimentList = sqliteHelper.searchExperimentsByMaterials(materialList) as ArrayList<Experiment>
+                    experimentSearchAdapter.addItems(experimentList)
+                    searchView.setQuery("", false)
                 }
-                experimentList = sqliteHelper.searchExperimentsByMaterials(materialList) as ArrayList<Experiment>
-                experimentSearchAdapter.addItems(experimentList)
-                Log.e(null, experimentList.toString())
-                searchView.setQuery("", false)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 return true
             }
-
-
         })
     }
 

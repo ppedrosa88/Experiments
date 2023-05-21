@@ -4,14 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.ExperimentDetailsView">
+    tools:context=".ui.ExperimentDetailsView"
+    android:background="@drawable/paper">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:theme="@style/Theme.Experimentos.PopupOverlay"/>
+        android:theme="@style/Theme.Experimentos.PopupOverlay">
+
+        <ImageView
+            android:id="@+id/photo_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="experiment image detail" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_experiment_detail" />
 

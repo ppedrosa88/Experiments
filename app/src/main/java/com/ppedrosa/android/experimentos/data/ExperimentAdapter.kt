@@ -3,8 +3,10 @@ package com.ppedrosa.android.experimentos.data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ppedrosa.android.experimentos.database.Experiment
 import com.ppedrosa.android.experimentos.R
 import com.ppedrosa.android.experimentos.ui.ExperimentView
@@ -24,9 +26,15 @@ class ExperimentAdapter(private var experimentList: ArrayList<Experiment> = Arra
 
     class ExperimentViewHolder(itemView: View, listener: onItemClickListener): RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.titleTV)
+        val image: ImageView = itemView.findViewById(R.id.ExperimentsIV)
 
         fun bindView(experiment: Experiment) {
             name.text = experiment.name
+            if(experiment.photo_url != null) {
+                Glide.with(itemView.context)
+                    .load(experiment.photo_url)
+                    .into(image)
+            }
         }
 
         init {

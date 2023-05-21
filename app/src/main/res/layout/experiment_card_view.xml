@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
+    style="?attr/materialCardViewOutlinedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="16dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Media -->
         <ImageView
             android:id="@+id/ExperimentsIV"
             android:src="@drawable/ic_launcher_background"
@@ -22,6 +26,8 @@
             android:adjustViewBounds="true"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:padding="8dp"
+
             android:contentDescription="@string/experiments"
             />
 
@@ -31,18 +37,17 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Title, secondary and supporting text -->
             <TextView
                 android:id="@+id/titleTV"
-                android:layout_margin="20dp"
-                android:gravity="center_vertical"
-                android:text="@string/title"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:fontFamily="casual"
+                android:gravity="center_vertical"
+                android:text="@string/title"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
-                />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

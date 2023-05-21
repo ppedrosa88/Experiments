@@ -1,7 +1,6 @@
 package com.ppedrosa.android.experimentos.ui
 
-import android.content.ContentValues
-import android.graphics.Typeface
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -9,10 +8,12 @@ import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.ppedrosa.android.experimentos.R
@@ -31,6 +32,7 @@ class ExperimentDetailsView : AppCompatActivity() {
     private lateinit var adviceTV: TextView
     private lateinit var techniqueTV: TextView
     private lateinit var challengeTV: TextView
+    private lateinit var photo:ImageView
     private lateinit var sqliteHelper: SQLiteHelper
     private var experimentId: Int = -1
     private lateinit var binding: ActivityExperimentDetailBinding
@@ -42,15 +44,11 @@ class ExperimentDetailsView : AppCompatActivity() {
         setContentView(binding.root)
 
         val experimentId = intent.getIntExtra(EXTRA_EXPERIMENT_ID, -1)
-
         this.experimentId = experimentId
 
         if (experimentId == -1) {
-            Log.d(ContentValues.TAG, "No recibe category")
             finish()
         } else {
-            Log.e(null, experimentId.toString())
-
             titleTV = findViewById(R.id.titleTVExp)
             warningTV = findViewById(R.id.warningTVExperiment)
             instructionTV = findViewById(R.id.instructionTVExperiment)
@@ -59,6 +57,7 @@ class ExperimentDetailsView : AppCompatActivity() {
             adviceTV = findViewById(R.id.adviceTVExperiment)
             techniqueTV = findViewById(R.id.techniqueTVExperiment)
             challengeTV = findViewById(R.id.challengeTVExperiment)
+            photo = findViewById(R.id.photo_details)
 
             sqliteHelper = SQLiteHelper(this)
 
@@ -66,12 +65,14 @@ class ExperimentDetailsView : AppCompatActivity() {
             val material = sqliteHelper.getMaterialsByExperimentsId(experimentId)
 
             if (experiment != null) {
-                Log.e(null, experiment.name.toString())
-            }
-
-            if (experiment != null) {
                 titleTV.text = experiment.name
                 formatMaterials(material)
+
+                if (experiment.photo_url != null) {
+                    Glide.with(this)
+                        .load(experiment.photo_url)
+                        .into(photo)
+                }
 
                 if (experiment.warning == null) {
                     warningTV.visibility = View.GONE
@@ -91,7 +92,6 @@ class ExperimentDetailsView : AppCompatActivity() {
                     explanationTV.visibility = View.GONE
                 } else {
                     formatExplanation(experiment)
-                    explanationTV.setTypeface(null, Typeface.BOLD)
                 }
 
                 if (experiment.observation == null) {
@@ -203,7 +203,7 @@ class ExperimentDetailsView : AppCompatActivity() {
             if (words.first() == "TODO") {
                 type = false
                 for (i in words.indices) {
-                    val word = words.get(i)
+                    val word = words[i]
                     if (i < 4) {
                         finalText.append("<font color='#317f43'>").append(word)
                             .append(" </font>")
@@ -217,7 +217,7 @@ class ExperimentDetailsView : AppCompatActivity() {
             } else if (words.first() == "¿PORQUÉ?") {
                 type = false
                 for (i in words.indices) {
-                    val word = words.get(i)
+                    val word = words[i]
                     if (i == 0) {
                         finalText.append("<font color='#317f43'>").append(word)
                             .append(" </font>").append("<br>")
@@ -258,8 +258,10 @@ class ExperimentDetailsView : AppCompatActivity() {
             for (mat in materialList) {
                 val chip = Chip(this)
                 chip.text = mat
+                chip.setTextColor(Color.WHITE)
                 chip.isClickable = false
                 chip.isCheckable = false
+                chip.setChipBackgroundColorResource(R.color.md_light_green_500)
                 chipGroup.addView(chip)
             }
         }

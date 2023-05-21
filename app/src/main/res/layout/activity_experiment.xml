@@ -4,16 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.ExperimentView">
+    tools:context=".ui.ExperimentView"
+    android:background="@drawable/paper">
+
+    <TextView
+        android:id="@+id/CategoryTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:layout_margin="8dp"
+        android:paddingTop="48dp"
+        android:paddingBottom="16dp"
+        android:text="Category"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/ExperimentRecycler"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ExperimentRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.9" />
+        app:layout_constraintTop_toBottomOf="@id/CategoryTV"
+        app:layout_constraintBottom_toBottomOf="@id/fab_exp_view"
+        app:layout_constraintHeight_percent="0.8" />
 
-    <include layout="@layout/fab_seach_button" />
+    <include
+        android:id="@+id/fab_exp_view"
+        layout="@layout/fab_seach_button"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
